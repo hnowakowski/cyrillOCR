@@ -4,7 +4,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import cv2
 import numpy as np
-from constants import IM_HEIGHT, IM_WIDTH
+from src.constants import IM_HEIGHT, IM_WIDTH
 
 def load_img(path: str) :
     """

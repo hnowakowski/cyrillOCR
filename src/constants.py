@@ -8,3 +8,7 @@ TRAIN_DIR = DATA_DIR + "/train"
 
 IM_HEIGHT = 200
 IM_WIDTH = 800
+
+### training params
+
+VALIDATION_SIZE = 0.2
