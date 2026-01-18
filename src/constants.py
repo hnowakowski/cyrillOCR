@@ -8,6 +8,7 @@ TRAIN_DIR = DATA_DIR + "/train"
 
 IM_HEIGHT = 200
 IM_WIDTH = 800
+MAX_LABEL_LENGTH = 40 # based on the dataset
 
 ### training params
 
