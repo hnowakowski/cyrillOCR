@@ -13,3 +13,4 @@ MAX_LABEL_LENGTH = 40 # based on the dataset
 ### training params
 
 VALIDATION_SIZE = 0.2
+LOG_DIR = 'logs/ocr'
