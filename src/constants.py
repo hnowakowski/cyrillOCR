@@ -3,6 +3,8 @@
 DATA_DIR = "data"
 TRAIN_TSV = DATA_DIR + "/train.tsv"
 TRAIN_DIR = DATA_DIR + "/train"
+TEST_TSV = DATA_DIR + "/test.tsv"
+TEST_DIR = DATA_DIR + "/test"
 
 ### train image transforms and augmentations
 
