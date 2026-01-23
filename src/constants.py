@@ -5,6 +5,8 @@ TRAIN_TSV = DATA_DIR + "/train.tsv"
 TRAIN_DIR = DATA_DIR + "/train"
 TEST_TSV = DATA_DIR + "/test.tsv"
 TEST_DIR = DATA_DIR + "/test"
+ALPHABET_FILE = "chars.txt"
+MODEL_FILE = "modelFULL.keras"
 
 ### train image transforms and augmentations
 

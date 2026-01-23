@@ -4,7 +4,77 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import cv2
 import numpy as np
-from src.constants import IM_HEIGHT, IM_WIDTH
+from src.constants import IM_HEIGHT, IM_WIDTH, ALPHABET_FILE, MODEL_FILE
+from tensorflow.keras.backend import ctc_batch_cost
+from tensorflow.keras.layers import StringLookup
+from tensorflow.keras.saving import load_model
+
+class CTCLayer(tf.keras.layers.Layer):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.loss_func = ctc_batch_cost
+
+    def call(self, y_true, y_pred):
+        batch_size = tf.cast(tf.shape(y_true)[0], tf.int32)
+        input_len = tf.cast(tf.shape(y_pred)[1], tf.int32)
+        input_len *= tf.ones((batch_size, 1), tf.int32)
+
+        label_len = tf.math.count_nonzero(y_true, axis=1, keepdims=True)
+        
+        loss = self.loss_func(y_true, y_pred, input_len, label_len)
+        self.add_loss(loss)
+        return y_pred
+    
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "loss_func": self.loss_func,
+        })
+        return config
+    
+
+def get_encode_funs(verbose=False):
+    chars = []
+    with open(ALPHABET_FILE) as file:
+        line = file.readline()
+        chars = list(line)
+    if verbose:
+        print(chars)
+
+    label_to_int = StringLookup(vocabulary=chars, num_oov_indices=0) # encode
+    label_to_str = StringLookup(vocabulary=label_to_int.get_vocabulary(), invert=True) # decode
+    return label_to_int, label_to_str
+
+
+def load_MY_model():
+    model = load_model(MODEL_FILE, custom_objects={"CTCLayer": CTCLayer})
+    infer_model = tf.keras.Model(inputs=model.inputs[0], outputs=model.get_layer("softmax").output)
+    return infer_model
+
+
+def load_img_bytes(bytes):
+    """
+    Reading an image's bytes with tf including resizing and padding
+    """
+    # grayscale
+    img = tf.io.decode_png(bytes, channels=1)
+    img = tf.image.convert_image_dtype(img, tf.float32)
+
+    # resize
+    h = tf.shape(img)[0]
+    w = tf.shape(img)[1]
+    scale = IM_HEIGHT / tf.cast(h, tf.float32)
+    new_w = tf.cast(tf.cast(w, tf.float32) * scale, tf.int32)
+    img = tf.image.resize(img, (IM_HEIGHT, new_w))
+
+    # pad or squeeze
+    curr_w = tf.shape(img)[1]
+    if curr_w > IM_WIDTH:
+        img = tf.image.resize(img, (IM_HEIGHT, IM_WIDTH))
+    else:
+        pad_w = IM_WIDTH - curr_w
+        img = tf.pad(img, [[0, 0], [0, pad_w], [0, 0]], constant_values=0.)
+    return img
 
 def load_img(path):
     """
