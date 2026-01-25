@@ -19,7 +19,7 @@ def setup():
 if __name__ == "__main__":
     label_to_int, label_to_str, model = setup()
 
-    img_raw = st.file_uploader("Preferred size: 200x800, otherwise it will be resized to have the height match 200px and the width will be padded, disproportionally tall/wide images will get squeezed which might impact inference",
+    img_raw = st.file_uploader("MAX TEXT LENGTH: 40 characters\nPreferred size: 200x800, otherwise it will be resized to have the height match 200px and the width will be padded, disproportionally tall/wide images will get squeezed which might impact inference",
                                 accept_multiple_files=False, type="png")
     if img_raw is not None:
         img_rawed = load_img_bytes(img_raw.read())

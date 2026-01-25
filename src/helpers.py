@@ -9,6 +9,9 @@ from tensorflow.keras.layers import StringLookup
 from tensorflow.keras.saving import load_model
 
 class CTCLayer(tf.keras.layers.Layer):
+    """
+    Defined here so the model load does not break
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.loss_func = ctc_batch_cost
@@ -46,6 +49,9 @@ def get_encode_funs(verbose=False):
 
 
 def load_MY_model():
+    """
+    Inference-only model for streamlit deployment, missing final CTCLayer but does not need labels as input
+    """
     model = load_model(MODEL_FILE, custom_objects={"CTCLayer": CTCLayer})
     infer_model = tf.keras.Model(inputs=model.inputs[0], outputs=model.get_layer("softmax").output)
     return infer_model
