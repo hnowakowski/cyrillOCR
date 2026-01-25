@@ -6,7 +6,7 @@ warnings.filterwarnings(
     module="keras.src.export.tf2onnx_lib"
 )
 import streamlit as st
-from src.helpers import load_img_bytes, decode_model_output, load_MY_model, get_encode_funs, build_dataset
+from src.helpers import load_img_bytes, decode_model_output, load_MY_model, get_encode_funs, convert_img
 import tensorflow as tf
 
 @st.cache_resource
@@ -19,12 +19,13 @@ def setup():
 if __name__ == "__main__":
     label_to_int, label_to_str, model = setup()
 
-    img_raw = st.file_uploader("lol", accept_multiple_files=False, type="png")
+    img_raw = st.file_uploader("Preferred size: 200x800, otherwise it will be resized to have the height match 200px and the width will be padded, disproportionally tall/wide images will get squeezed which might impact inference",
+                                accept_multiple_files=False, type="png")
     if img_raw is not None:
-        img = load_img_bytes(img_raw.read())
-        img = tf.expand_dims(img, axis=0)
+        img_rawed = load_img_bytes(img_raw.read())
+        img = tf.expand_dims(img_rawed, axis=0)
         preds = model.predict(img)
         decoded = decode_model_output(preds, label_to_str)
-        st.write(decoded[0])
-        st.image(img_raw)
+        st.write(f"Predicted text: {decoded[0]}")
+        st.image(convert_img(img_rawed))
     

@@ -2,7 +2,6 @@ import tensorflow as tf
 import pandas as pd
 from tensorflow import keras
 from tensorflow.keras import layers
-import cv2
 import numpy as np
 from src.constants import IM_HEIGHT, IM_WIDTH, ALPHABET_FILE, MODEL_FILE
 from tensorflow.keras.backend import ctc_batch_cost
@@ -50,6 +49,16 @@ def load_MY_model():
     model = load_model(MODEL_FILE, custom_objects={"CTCLayer": CTCLayer})
     infer_model = tf.keras.Model(inputs=model.inputs[0], outputs=model.get_layer("softmax").output)
     return infer_model
+
+def convert_img(img):
+    """
+    Converts tf tensor image back into a displayable streamlit image\n
+    Only for visualisation/ui purposes
+    """
+    img = tf.squeeze(img, axis=-1)
+    img = tf.clip_by_value(img, 0., 1.)
+    img = (img * 255.).numpy().astype("uint8")
+    return img
 
 
 def load_img_bytes(bytes):
