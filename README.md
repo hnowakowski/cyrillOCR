@@ -56,6 +56,7 @@ CTC loss (the loss function used for training the network) helps finetune the af
 Finally, when decoding the final label, the most likely character out of this distribution is chosen and the duplicate characters alongside with the blank characters are pruned; the below image showcases this process.
 
 ![ctc](readme_stuff/ctc.png)
+
 [Image source](https://distill.pub/2017/ctc/)
 
 Any more than 50 and the model would waste computation time on a lot of blank spaces, and with lower values we could risk not having enough "character slots" for all of the text.
