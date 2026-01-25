@@ -159,7 +159,7 @@ The model places a ton of importance on the `ми` part of the word, which makes
 ### Project points:
 
 - ocr problem 2
-- own model 2 (as far as we know this *style* of architecture is common with ocr models, but we have not copied any particular approach directly and all the layer sizes and other parameters were chosen by us via trial and error)
+- own model 2 (the kaggle page had one example model but it's completely different)
 - dataset over 10k photos 1
 - overfitting examples 1
 - data augmentation 1
