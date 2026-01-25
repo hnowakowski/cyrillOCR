@@ -160,7 +160,7 @@ The model places a ton of importance on the `ми` part of the word, which makes
 ### Project points:
 
 - ocr problem 2
-- own model 2? (the kaggle page had one example model but it's completely different, also ![this youtube tutorial](https://www.youtube.com/watch?v=OS5GDGU-jvc) was very helpful for the *general* pipeline but we've chosen all the layer counts, sizes, kernels, pooling, etc. on our own via trial and error on what worked best)
+- own model 2? (the kaggle page had one example model but it's completely different, also [this youtube tutorial](https://www.youtube.com/watch?v=OS5GDGU-jvc) was very helpful for the *general* pipeline but we've chosen all the layer counts, sizes, kernels, pooling, etc. on our own via trial and error on what worked best)
 - dataset over 10k photos 1
 - overfitting examples 1
 - data augmentation 1
