@@ -78,7 +78,7 @@ A very standard metric for evaluating OCR models - it basically just compares th
 Validation: 0.39 <br>
 Test set: 0.57
 
-A smooth downwards curve with no hiccups. We can notice a dip after epoch ~35 when the learning rate starts to decrease. Also unfortunately there is a bit of overfitting.
+A smooth downwards curve with no hiccups. We can notice a dip after epoch ~35 when the learning rate starts to decrease.
 
 Note: this metric takes character case into account
 
@@ -120,13 +120,13 @@ Very similar pattern to the length ratio, except inverted. One noteable differen
 
 ![tensorboard learning rate](readme_stuff/tensorboard_learning_rate.png)
 
-The model trains consistently up until roughly epoch 35, then quickly plateaus. Interestingly, this period between epoch 35 and 49 represents a noticeable increase in CER and EWM while other metrics plateau (could be finetuning into overfitting).
+The model trains consistently up until roughly epoch 35, then quickly plateaus. Interestingly, this period between epoch 35 and 49 represents a noticeable increase in CER and EWM while other metrics plateau.
 
 ### Loss over time
 
 ![tensorboard loss](readme_stuff/tensorboard_loss.png)
 
-We can see that after a bit loss and validation loss diverge, especially after the 35 epoch plateau, normal loss gets finetuned much more than validation, could explain overfitting.
+We can see that after a bit loss and validation loss diverge, especially after the 35 epoch plateau, normal loss gets finetuned much more than validation.
 
 # Example analysis
 
